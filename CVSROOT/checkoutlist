@@ -11,5 +11,5 @@
 #	[<whitespace>]<filename><whitespace><error message><end-of-line>
 #
 # comment lines begin with '#'
-commit_mail.sh
+mail_commit.sh
 

@@ -1,4 +1,3 @@
-#!/bin/sh
 rm -f /tmp/kd_log.txt
 echo "" > /tmp/kd_log.txt
 echo %{sVv} >> /tmp/kd_log.txt
