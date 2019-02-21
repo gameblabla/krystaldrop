@@ -2,7 +2,26 @@
 #define ArchiveReader_H
 
 #include <map>
-#include <string>
+#include <cstring>
+#include <locale>
+
+/* 
+ * structs needed for std::transform() 
+ * See: http://gcc.gnu.org/onlinedocs/libstdc/22_locale/howto.html#7 
+ */ 
+struct ToUpper { 
+	ToUpper(std::locale const& l) : loc(l) {;} 
+	char operator() (char c) const  { return std::toupper(c,loc); } 
+private: 
+	std::locale const& loc; 
+}; 
+	 
+struct ToLower { 
+	ToLower(std::locale const& l) : loc(l) {;} 
+	char operator() (char c) const  { return std::tolower(c,loc); } 
+private: 
+	std::locale const& loc; 
+}; 
 
 #include "../Tools/defines.h"
 

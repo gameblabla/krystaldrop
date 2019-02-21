@@ -4,10 +4,10 @@
 #include "../Tools/Logfile.h"
 
 #ifndef _WIN32
-#include <ctype.h>
+#include <cctype>
 #endif
 
-#include <assert.h>
+#include <cassert>
 #include <algorithm>
 
 std::map<std::string,KD_ArchiveReader*> KD_ArchiveManager::opened_archives;
@@ -40,8 +40,9 @@ void KD_ArchiveManager::RegisterArchiveFormat (std::string suffix, T_ArchiveRead
 
 void KD_ArchiveManager::NormalizeSuffix (std::string& suffix)
 {
+  ToLower __tolower(std::locale::classic());
   // stores the suffix lower-case
-  transform (suffix.begin(), suffix.end(), suffix.begin(), tolower);
+  transform (suffix.begin(), suffix.end(), suffix.begin(), __tolower);
 
    // add the dot character `.' if it is missing
   if (suffix[0]!= '.') suffix= '.'+ suffix;
