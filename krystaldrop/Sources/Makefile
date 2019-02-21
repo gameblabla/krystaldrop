@@ -160,7 +160,7 @@ ifeq ($(DEBUG_MODE),yes)
   CCFLAGS:=$(CCFLAGS) -ggdb -DDEBUG -DDEBUG_SANITY_CHECK
 endif
 ifeq ($(DEBUG_MODE),no)
-  CCFLAGS:=$(CCFLAGS) -O2 -DNDEBUG
+  CCFLAGS:=$(CCFLAGS) -DNDEBUG
 endif
 ifeq ($(DISPLAY_FPS),yes)
   CCFLAGS:=$(CCFLAGS) -DDISPLAY_FPS
@@ -187,11 +187,11 @@ $(DEP): %.d: FORCE
 	@$(MAKE) -s --no-print-directory -f Makefile.dep $@
 
 kdrop: $(OBJ)
-	$(LINK) $(LDFLAGS) $(LCFLAGS) -o $@ $(OBJ) $(LIBS)
+	$(CXX) $(LDFLAGS) $(LCFLAGS) -o $@ $(OBJ) $(LIBS)
 
 $(OBJ): %.o: dep/%.d
 $(OBJ): %.o: %.cpp
-	$(CC) $(CCFLAGS) -o $@ -c $<
+	$(CXX) $(CCFLAGS) $(CXXFLAGS) -o $@ -c $<
 
 clean:
 	find -name "*.o" -exec rm {} ";"
