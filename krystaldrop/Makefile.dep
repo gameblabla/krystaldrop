@@ -10,7 +10,6 @@ default:
 $(DEP): dep/%.d: %.cpp
 	@test -d dep/$(dir $*) || mkdir -p dep/$(dir $*)
 	@$(SHELL) -ec '$(CC) $(CCFLAGS) $(DCFLAGS) $< \
-	| sed '\''s/$(subst .,\.,$(notdir $*))\.o[ :]*/$(subst /,\/,$*).o \
-	dep\/$(subst /,\/,$*).d : /g'\'' > $@; \
+	| sed '\''s/$(subst .,\.,$(notdir $*))\.o[ :]*/$(subst /,\/,$*).o dep\/$(subst /,\/,$*).d : /g'\'' > $@; \
 	[ -s $@ ] || rm -f $@'
 
