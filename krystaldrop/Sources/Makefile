@@ -187,7 +187,7 @@ $(DEP): %.d: FORCE
 	@$(MAKE) -s --no-print-directory -f Makefile.dep $@
 
 kdrop: $(OBJ)
-	$(LINK) $(LCFLAGS) $(LIBS) -o $@ $(OBJ)
+	$(LINK) $(LDFLAGS) $(LCFLAGS) -o $@ $(OBJ) $(LIBS)
 
 $(OBJ): %.o: dep/%.d
 $(OBJ): %.o: %.cpp
