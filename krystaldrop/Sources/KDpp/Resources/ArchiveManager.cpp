@@ -1,3 +1,5 @@
+#include <assert.h>
+
 #include "ArchiveManager.h"
 #include "../Tools/Logfile.h"
 
