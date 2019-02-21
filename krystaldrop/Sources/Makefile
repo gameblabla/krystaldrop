@@ -35,7 +35,7 @@ ACC_ZLIB_SUPPORT=yes
 export
 VERSION=0_7_2
 
-CC=g++ -Werror
+CC=g++
 LINK=g++
 MAKE=make
 
@@ -84,7 +84,6 @@ SRC= KrystalDrop/main.cpp                              \
      KDpp/Controller/UserInterface/EditField.cpp       \
      KDpp/Controller/UserInterface/KeyboardCursor.cpp  \
      KDpp/Controller/UserInterface/WidgetContainer.cpp \
-     KDpp/Math/Vector.cpp                              \
      KDpp/Resources/ArchiveManager.cpp                 \
      KDpp/Resources/GlobalResourceSet.cpp              \
      KDpp/Resources/Resource.cpp                       \
