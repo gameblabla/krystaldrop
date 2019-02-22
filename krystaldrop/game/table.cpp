@@ -132,7 +132,8 @@ void KD_Table::desalloc()
 		yGemOnFinish = 0;
 	}
 
-	if (rightDoor)
+	/* Disable these otherwise crash */
+	/*if (rightDoor)
 	{
 		delete[] rightDoor;
 		rightDoor = 0;
@@ -148,7 +149,7 @@ void KD_Table::desalloc()
 	{
 		delete[] lineSpriteInstance;
 		lineSpriteInstance = 0;
-	}
+	}*/
 }
 
 void KD_Table::setWidth(int width)
@@ -317,12 +318,7 @@ void KD_Table::setLoopGems(bool loopGems)
 
 signed KD_Table::loadGemsToCome(char *fileName)
 {
-	return loadGemsToCome(0, fileName);
-}
-
-signed KD_Table::loadGemsToCome(TACCRes *accFile, char *fileName)
-{
-	KD_TextFile file(accFile, fileName);
+	KD_TextFile file(fileName);
 
 	///  100 columns for a table should never be reached.... we can hope.
 #define BUF_COLUMNS_SIZE 100 /* ajout de krys */

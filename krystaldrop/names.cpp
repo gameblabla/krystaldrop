@@ -22,8 +22,7 @@ char* CHAR_NAME[KD_NB_CHAR]= {
 char* MUSIC_NAME[KD_NB_MUSIC]= {
    "art/puzzle1.ogg", "art/puzzle2.ogg", "art/puzzle3.ogg", "art/puzzle4.ogg" };
 
-char* HST_NAME[KD_NB_HST]= {
-   "art/defsco.acc", "survival.sco" };
+char* HST_NAME[KD_NB_HST]= { "survival.sco" };
 
 /*char* GEM_ANIM_NAME[KD_GEM_NB_KINDS]=
 { "nr.txt", "nb.txt", "ng.txt", "ny.txt", "sr.txt", "sb.txt", "sg.txt", "sy.txt",

@@ -11,8 +11,6 @@
 
 using namespace std;
 
-class TACCRes;
-
 /**
 	class used to read text files, whether they are or not in a .ACC file.
   */
@@ -39,20 +37,9 @@ public:
 	KD_TextFile(char *fileName);
 
 	/**
-		Make the TextFile points to the acc file. A copy is made of it, so that the ACC file can be released safely.
-	*/
-	KD_TextFile(TACCRes *accFile, char *fileName);
-
-	/**
 		Opens the textfile named fileName and copies it into memory.
 	*/
 	bool Load(char *fileName);
-
-	/**
-		Make the TextFile points to the acc file. A copy is made of it, so that the ACC file can be released safely.
-		If accFile is 0, then the method attempt to load the real file fileName.
-	*/
-	bool Load(TACCRes *accFile, char *fileName);
 
 	/**
 		Destructor, it frees the space allocated for the file.

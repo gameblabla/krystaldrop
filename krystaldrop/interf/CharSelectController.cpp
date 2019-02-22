@@ -3,7 +3,6 @@
 #include "Application.h"
 #include "CharSelectController.h"
 #include "eventmanager.h"
-#include "../util/direct.h"
 #include "../video/animtextevent.h"
 #include "../video/background.h"
 #include "../video/Display.h"
@@ -90,37 +89,24 @@ bool KD_CharSelectController::init()
   bool b;
   
   /* load the graphics */
-  TACCRes* acc= new TACCRes();
-  assert (acc);
-  if (acc== NULL) return false;
-    
-  res= acc->LoadACC ("art/charsel.acc");
-  assert (res== 0);
-  if (res< 0) return false;
    
   KD_ImageManager* image_manager= KD_ImageManager::getImageManager();
   assert (image_manager);
   if (image_manager== NULL) return false;
 
   for (short i= 0; i< KD_CSC_NB_IMG; i++)
-  { b= image_manager->Load (acc, CHAR_IMG_NAME[i]);
+  { b= image_manager->Load( CHAR_IMG_NAME[i]);
     assert (b);
     if (b== false) return false;
     img[i]= image_manager->getImage(CHAR_IMG_NAME[i]);
   }
-
-  res= acc->LoadACC ("art/menu.acc");
-  assert (res== 0);
-  if (res< 0) return false;    
   
-  b= spr[0].Load(acc,"ar_l.txt"); assert (b); if (b== false) return false;
+  b= spr[0].Load("ar_l.txt"); assert (b); if (b== false) return false;
   spri[0]= new KD_SpriteInstance (&spr[0]); assert (spri[0]);
   spri[0]->x= (int) (KD_CSC_CENTER_X1- KD_CSC_CENTER_R1* 0.8);
   spri[0]->y= KD_CSC_CENTER_Y1+ 12;
   spri[0]->setAnim(0);
   
-  DELETE (acc);
-
   font[0]= Display::Slapstick;
   font[1]= Display::Slapstick->resize(0.5);
 
@@ -211,3 +197,4 @@ bool KD_CharSelectController::quit()
 
   return KD_Controller::quit();  
 }
+

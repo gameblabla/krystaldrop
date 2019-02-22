@@ -5,7 +5,6 @@
 
 #include "image.h"
 
-class TACCRes;
 class KD_ImageManager;
 
 /**
@@ -44,12 +43,6 @@ public:
 		Loads an image from the file fileName.
 	*/
 	virtual void Load(char *fileName);
-
-	/**
-		Loads an image from the file fileName which stands in the accFile accFile.
-		If accFile == 0, attempts to load the image from the real file fileName.
-	*/
-	virtual void Load(TACCRes *accFile, char *fileName);
 
 	/**
 		Displays the image in (x,y).

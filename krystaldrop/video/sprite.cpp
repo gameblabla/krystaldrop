@@ -6,7 +6,6 @@
 #include "image.h"
 #include "sprite.h"
 #include "../util/textfile.h"
-#include "../util/direct.h"
 #include "../util/logfile.h"
 
 #ifdef WIN32
@@ -31,15 +30,8 @@ void KD_Anim::addFileImage(char *name)
 {
 	KD_ImageManager *imgMgr = KD_ImageManager::getImageManager();
 
-	imgMgr->Load(0,name);
-	addSurface(imgMgr->getImage(name));
-}
-
-void KD_Anim::addFileImageFromACC(TACCRes *accFile, char *name)
-{
-	KD_ImageManager *imgMgr = KD_ImageManager::getImageManager();
-
-	imgMgr->Load(accFile, name);
+	imgMgr->Load(name);
+	
 	addSurface(imgMgr->getImage(name));
 }
 
@@ -128,14 +120,10 @@ KD_Anim *KD_Sprite::newAnim()
 	return anim;
 }
 
+
 bool KD_Sprite::Load(char *fileName)
 {
-	return Load(0,fileName);
-}
-
-bool KD_Sprite::Load(TACCRes *accFile, char *fileName)
-{
-	KD_TextFile file(accFile, fileName);
+	KD_TextFile file(fileName);
 
 	char buf[1000]; /* ## !! */
 	KD_Anim *currAnim = 0;
@@ -180,7 +168,7 @@ bool KD_Sprite::Load(TACCRes *accFile, char *fileName)
 				KD_LogFile::printf("File %s: Syntax error: newanim must be specified before the first instance of file.",fileName);
 				return false;
 			}
-			currAnim->addFileImageFromACC(accFile, (char *)str.c_str());
+			currAnim->addFileImage( (char *)str.c_str());
 		}
 		else if ( strcmp(buf, "jumpto")==0 )
 		{

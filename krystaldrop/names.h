@@ -46,7 +46,7 @@ extern char* CHAR_NAME[KD_NB_CHAR];
 extern char* MUSIC_NAME[KD_NB_MUSIC];
 
 /* high scores files */
-#define KD_NB_HST 2 /* high scores tables */
+#define KD_NB_HST 1 /* high scores tables */
 extern char* HST_NAME[KD_NB_HST];
 
 /* gems resources names */

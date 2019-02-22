@@ -24,11 +24,6 @@ KD_Font::KD_Font (char *fileName)
 	Load(fileName);
 }
 
-KD_Font::KD_Font (TACCRes *accFile, char *fileName)
-{
-	LoadFromAcc(accFile, fileName);
-}
-
 KD_Font::~KD_Font ()
 {
 	for (int i=0; i<256; i++)
@@ -50,17 +45,9 @@ KD_Font::~KD_Font ()
 }
 
 bool KD_Font::Load (char *fileName)
-{
-	return LoadFromAcc(0,fileName);
-}
-
-bool KD_Font::LoadFromAcc (TACCRes *accFile, char *fileName)
 {	KD_TextFile file;
 		
-	if (accFile)
-		file.Load(accFile,fileName);
-	else
-		file.Load(fileName);
+	file.Load(fileName);
 
 	char buf[256];
 
@@ -73,10 +60,7 @@ bool KD_Font::LoadFromAcc (TACCRes *accFile, char *fileName)
 	}
 	file.jumpLine();
 
-	if (accFile)
-		KD_ImageManager::getImageManager()->Load(accFile, buf, false);
-	else
-		KD_ImageManager::getImageManager()->Load(0,buf, false);
+	KD_ImageManager::getImageManager()->Load(buf, false);
 
 
 	SDL_Surface *surf = KD_ImageManager::getImageManager()->getImage(buf)->getSDL_Surface();

@@ -1,6 +1,5 @@
 #include "textfile.h"
 
-#include "direct.h"
 #include "logfile.h"
 #include <stdio.h>
 #include <memory.h>
@@ -16,19 +15,18 @@ KD_TextFile::KD_TextFile(char *fileName) : pos(0)
 	Load(fileName);
 }
 
-KD_TextFile::KD_TextFile(TACCRes *accFile, char *fileName) : pos(0)
-{
-	Load(accFile, fileName);
-}
-
 bool KD_TextFile::Load(char *fileName)
 {
-	FILE *fpt = fopen(fileName,"rb");
+	char tmp[512];
+	FILE *fpt;
+
+	snprintf(tmp, sizeof(tmp), "art/txt/%s", fileName);
+	fpt = fopen(tmp,"rb");
 	
 	if (!fpt) 
 	{
-		printf("File %s not found!",fileName);
-		KD_LogFile::printf("File %s not found!",fileName);
+		printf("File %s not found!",tmp);
+		KD_LogFile::printf("File %s not found!",tmp);
 		KD_LogFile::Close();
 		assert(fpt);
 		return false;
@@ -45,45 +43,6 @@ bool KD_TextFile::Load(char *fileName)
 
 	fclose(fpt);
 	return true;
-}
-
-bool KD_TextFile::Load(TACCRes *accFile, char *fileName)
-{
-	if (!accFile)
-		return Load(fileName);
-	
-	int idAcc = accFile->EntryId(fileName);
-
-	if (idAcc<0)
-	{
-		switch (idAcc)
-		{
-		case ACC_ENTRYNOTFOUND:
-			printf("File %s not found in ACC file %s\n", fileName, accFile->CurrentFile);
-			KD_LogFile::printf("File %s not found in ACC file %s\n", fileName, accFile->CurrentFile);
-			assert(0);
-			return false;
-		case ACC_NOTINITIALIZED:
-			printf("File %s not found: ACC File not properly initialized.\n", fileName);
-			KD_LogFile::printf("File %s not found: ACC File not properly initialized.\n",fileName);
-			assert(0);
-			return false;
-		default:
-			printf("Unknown error in ACC File. Aborting.\n");
-			KD_LogFile::printf("Unknown error in ACC File. Aborting.\n");
-			assert(0);
-			return false;
-		}
-	}
-
-	size = accFile->EntryLength(idAcc);
-
-	char *ptr = (char *)accFile->EntryPtr(idAcc);
-
-	text = new char[size+1];
-	memcpy(text,ptr,size);
-	text[size]=0;
-	return false;
 }
 
 KD_TextFile::~KD_TextFile()

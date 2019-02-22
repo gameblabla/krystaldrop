@@ -22,7 +22,7 @@ class KD_AnimatedRow: public KD_Row
    void UpdateBlocks (unsigned multiplier); /* multiplier is used to catch up when a lag has occured */
   
   public:
-   KD_AnimatedRow::KD_AnimatedRow (short Height_In_Gems, short x_Offset, 
+	KD_AnimatedRow (short Height_In_Gems, short x_Offset, 
                                    KD_Hand* Hand, KD_Parameters* Param, KD_Memo* Memo);
   ~KD_AnimatedRow();
   

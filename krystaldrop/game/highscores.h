@@ -7,8 +7,6 @@
 #define KD_E_INCORRECTSCOREFILE    -93
 #define KD_E_CANTREADACCFILE       -94
 
-class TACCRes;
-
 class KD_ScoreItem
 { protected:
    short max_name_length;
@@ -44,7 +42,6 @@ class KD_HighScoreTable
    ~KD_HighScoreTable ();
     
   signed LoadTable (FILE* f); 
-  signed LoadTableFromACC (TACCRes* acc, unsigned Index); 
   signed SaveTable (FILE* f);
   /* For LoadTable and SaveTable, f must be opened and positioned */
   /* If loading fails, the content of the memory is not preserved */

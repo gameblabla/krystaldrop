@@ -72,40 +72,40 @@ void KD_ImageManager::releaseImage(KD_Image *img)
 	assert(0);
 }
 
-/*bool KD_ImageManager::Load(char *fileName, bool loadOpenGL=true)
+bool KD_ImageManager::Load(char *fileName)
 {
 	// Test if an image with that name already exists.
 	if ( images.find(fileName) != images.end() )
 		return false;
 
 	KD_Image *img;
-	if (Display::isOpenGL && loadOpenGL)
+#ifndef NO_OPENGL
+	if (Display::isOpenGL)
 		img = new KD_OGLImage();
 	else
+#endif
 		img = new KD_SDLImage();
 
 	img->Load(fileName);
 	images[fileName]=img;
 	return true;
-}*/
+}
 
-bool KD_ImageManager::Load(TACCRes *accFile, char *fileName, bool loadOpenGL)
+bool KD_ImageManager::Load(char *fileName, bool loadOpenGL=true)
 {
 	// Test if an image with that name already exists.
-	if ( images.find(fileName) !=  images.end() )
+	if ( images.find(fileName) != images.end() )
 		return false;
 
 	KD_Image *img;
-#ifndef NO_OPENGL    
-	if ((Display::isOpenGL && loadOpenGL)) img = new KD_OGLImage();
-      else
-#endif      
+#ifndef NO_OPENGL
+	if (Display::isOpenGL && loadOpenGL)
+		img = new KD_OGLImage();
+	else
+#endif
 		img = new KD_SDLImage();
 
-	if (accFile)
-		img->Load(accFile, fileName);
-	else
-		img->Load(fileName);
+	img->Load(fileName);
 	images[fileName]=img;
 	return true;
 }

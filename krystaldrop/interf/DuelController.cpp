@@ -6,7 +6,6 @@
 #ifndef NO_SOUND
 #include "../sound/sound.h"
 #endif
-#include "../util/direct.h"
 #include "../video/font.h"
 #include "../video/gem.h"
 #include "../video/sprite.h"
@@ -104,7 +103,7 @@ bool KD_DuelController::init()
 		table[i].activateDoors(false);
 				
 		table[i].setGems(gem);
-		table[i].loadGemsToCome("art/tableDuel.txt");
+		table[i].loadGemsToCome("tableDuel.txt");
 		table[i].setLoopGems(false);
 
         for (int gem_type= 0; gem_type< KD_GEM_NB_KINDS; gem_type++)
@@ -212,84 +211,70 @@ bool KD_DuelController::initReadyState()
 
 void KD_DuelController::loadSprites()
 {	signed res;
-	TACCRes *accFile;
 
-	accFile= new TACCRes();
-	res= accFile->LoadACC("art/survival.acc");
-	assert(!res);
 	border[KD_HORIZONTAL_BAR]= new KD_Sprite();
-	res= border[KD_HORIZONTAL_BAR]->Load(accFile,"horizontalbar.txt");
+	res= border[KD_HORIZONTAL_BAR]->Load("horizontalbar.txt");
 	assert(res);
 	border[KD_VERTICAL_BAR]  = new KD_Sprite();
-	res= border[KD_VERTICAL_BAR]->Load(accFile,"verticalbar.txt");
+	res= border[KD_VERTICAL_BAR]->Load("verticalbar.txt");
 	assert(res);
 	border[KD_UPPER_LEFT_BAR]    = new KD_Sprite();
-	res= border[KD_UPPER_LEFT_BAR]->Load(accFile,"upleftcorner.txt");
+	res= border[KD_UPPER_LEFT_BAR]->Load("upleftcorner.txt");
 	assert(res);
 	border[KD_UPPER_RIGHT_BAR]   = new KD_Sprite();
-	res= border[KD_UPPER_RIGHT_BAR]->Load(accFile,"uprightcorner.txt");
+	res= border[KD_UPPER_RIGHT_BAR]->Load("uprightcorner.txt");
 	assert(res);
 
 	border[KD_LEFTDOOR] = new KD_Sprite();
-	res= border[KD_LEFTDOOR]->Load(accFile, "doorl.txt");
+	res= border[KD_LEFTDOOR]->Load( "doorl.txt");
 	assert(res);
 	border[KD_RIGHTDOOR] = new KD_Sprite();
-	res= border[KD_RIGHTDOOR]->Load(accFile, "doorr.txt");
+	res= border[KD_RIGHTDOOR]->Load( "doorr.txt");
 	assert(res);
 
 	border[KD_BOTTOM_BAR]   = new KD_Sprite();
-	res= border[KD_BOTTOM_BAR]->Load(accFile, "bottombar.txt");
+	res= border[KD_BOTTOM_BAR]->Load( "bottombar.txt");
 	assert(res);
 
-	KD_ImageManager::getImageManager()->Load(accFile, "terrainMulti.png");
+	KD_ImageManager::getImageManager()->Load( "terrainMulti.png");
 	background= KD_ImageManager::getImageManager()->getImage("terrainMulti.png");
 	background->disableAlpha();  
 
-	res= accFile->LoadACC("art/gems.acc");  
     for (short gem_index= 0; gem_index< KD_GEM_NB_KINDS; gem_index++)
 	{ gem[gem_index]= new KD_Sprite();
-	  res= gem[gem_index]->Load(accFile, GEM_ANIM_NAME[gem_index]);
+	  res= gem[gem_index]->Load( GEM_ANIM_NAME[gem_index]);
 	}
-  
-	/* character images */
-	res= accFile->LoadACC("art/charsel.acc");
-
+	
 	characterSprite[0]= new KD_Sprite();
-	res= characterSprite[0]->Load(accFile, CHAR_ANIM_NAME[pl_chars[0]]);
+	res= characterSprite[0]->Load( CHAR_ANIM_NAME[pl_chars[0]]);
 	assert(res);
 
 	characterSprite[1]= new KD_Sprite();
-	res= characterSprite[1]->Load(accFile, CHAR_ANIM_NAME[pl_chars[1]]);
+	res= characterSprite[1]->Load( CHAR_ANIM_NAME[pl_chars[1]]);
 	assert(res);
 
 	clown[0] = new KD_Sprite();
 	clown[1] = new KD_Sprite();
 	
-	res= accFile->LoadACC("art/chibi.acc");
-	assert (!res);
-	res= clown[0]->Load(accFile, "lightchip.txt");
-	res= clown[1]->Load(accFile, "lightchip.txt");
+	res= clown[0]->Load( "lightchip.txt");
+	res= clown[1]->Load( "lightchip.txt");
 	
 	// ARF, si on charge 2 fois le meme, on l'agrandit 2 fois!!!
-	clown[0]->resize(1.8f);
+	/* For some reasons it was resized to abnormal proportions ??? - Gameblabla */
+	//clown[0]->resize(1.8f);
 	//clown[1]->resize(1.8f);
 
-	res= accFile->LoadACC("art/misc/cup.acc");
 	cupSprite = new KD_Sprite();
-	res= cupSprite->Load(accFile, "cup.txt");
+	res= cupSprite->Load( "cup.txt");
 
-	res= accFile->LoadACC("art/misc/star.acc");
 	particle= new KD_Sprite();
 	CHECK_ALLOC (particle);
-	res= particle->Load(accFile,"star.txt");
+	res= particle->Load("star.txt");
 
-	res= accFile->LoadACC("art/misc/line.acc");
 	lineSprite= new KD_Sprite();
 	CHECK_ALLOC (lineSprite);
-	res= lineSprite->Load(accFile,"line.txt");
-
-	delete accFile;
-
+	res= lineSprite->Load("line.txt");
+	
 #ifndef NO_SOUND
 	plopSound->LoadSound("art/waterdrop.wav");
 	gemsDownSound->LoadSound("art/swing.wav");
@@ -660,11 +645,11 @@ bool KD_DuelController::displayFinishState()
 			if(Display::ticks - timeOfNewState > 2000)
 			{
 				// Print this only when the event is finished.
-				//Display::Slapstick->xycenteredprintf ((i==0) ? 32 + 7*32/2 : 384 + 7*32/2,240,"Victory!");
-				if (Display::isOpenGL)
+				Display::Slapstick->xycenteredprintf ((i==0) ? 32 + 7*32/2 : 384 + 7*32/2,240,"Victory!");
+				/*if (Display::isOpenGL)
 					Display::Slapstick->xycoloralpharotozoomcenteredprintf(255,255,255,255, 1.5f,1.5f, (i==0) ? 32 + 7*32/2 : 384 + 7*32/2,240, -70*3.14f/180, (i==0) ? 32 + 7*32/2 : 384 + 7*32/2,240, "Victory!");
 				else
-					Display::Slapstick->xycenteredprintf((i==0) ? 32 + 7*32/2 : 384 + 7*32/2,240, "Victory!");
+					Display::Slapstick->xycenteredprintf((i==0) ? 32 + 7*32/2 : 384 + 7*32/2,240, "Victory!");*/
 			}
 		}
 		else

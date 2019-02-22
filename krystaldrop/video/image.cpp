@@ -2,7 +2,6 @@
 
 #include <assert.h>
 
-#include "../util/direct.h"
 #include "../util/logfile.h"
 #include "Display.h"
 
@@ -24,10 +23,6 @@ void KD_Image::makeImageFromSDLSurface(SDL_Surface *surf)
 }
 
 void KD_Image::Load(char *fileName)
-{
-}
-
-void KD_Image::Load(TACCRes *accFile, char *fileName)
 {
 }
 

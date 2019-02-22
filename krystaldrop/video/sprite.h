@@ -46,9 +46,6 @@ public:
 	*/
 	void addFileImage(char *name);
 
-	void addFileImageFromACC(TACCRes *accFile, char *name);
-	//void addFileImageFromACC(char *name);
-
 	/**
 		Adds the specified surface to the anim.
 	*/
@@ -141,12 +138,6 @@ public:
 		Loads a Sprite from its file descriptor fileName
 	*/
 	bool Load(char *fileName);
-
-	/**
-		Loads a Sprite from its file descriptor fileName in tha ACC file accFile,
-		or from a real file if accFile is 0.
-	*/
-	bool Load(TACCRes *accFile, char *fileName);
 
 	/**
 		public getter for the ith anim.

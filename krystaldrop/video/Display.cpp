@@ -92,7 +92,7 @@ void Display::initDisplay(int width, int height, int bits, bool windowed, bool o
 
 	SDL_ShowCursor(SDL_DISABLE);
 
-	Slapstick = new KD_Font("art/Slapstick.txt");
+	Slapstick = new KD_Font("Slapstick.txt");
 	Slapstick->convertToColorKey(0,128);
 }
 

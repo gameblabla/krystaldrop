@@ -3,7 +3,6 @@
 #include "Application.h"
 #include "CharSelect2Controller.h"
 #include "eventmanager.h"
-#include "../util/direct.h"
 #include "../video/animtextevent.h"
 #include "../video/background.h"
 #include "../video/Display.h"
@@ -172,42 +171,32 @@ bool KD_CharSelect2Controller::init()
   bool b;
   
   /* load the graphics */
-  TACCRes* acc= new TACCRes();
-  assert (acc);
-  if (acc== NULL) return false;
-    
-  res= acc->LoadACC ("art/charsel.acc");
-  assert (res== 0);
-  if (res< 0) return false;
-   
   KD_ImageManager* image_manager= KD_ImageManager::getImageManager();
   assert (image_manager);
   if (image_manager== NULL) return false;
 
   short i;
   for (i= 0; i< 2* KD_NB_CHAR; i++)
-  { b= image_manager->Load (acc, CHAR_IMG_NAME[i]);
+  { b= image_manager->Load (CHAR_IMG_NAME[i]);
     assert (b);
     if (b== false) return false;
     img[i]= image_manager->getImage(CHAR_IMG_NAME[i]);
   }
 
-  b= image_manager->Load (acc, "borders1p.png");
+  b= image_manager->Load ("borders1p.png");
   assert (b);
   if (b== false) return false;
   img[KD_NB_CHAR* 2]= image_manager->getImage("borders1p.png");
 
-  b= image_manager->Load (acc, "borders2p.png");
+  b= image_manager->Load ("borders2p.png");
   assert (b);
   if (b== false) return false;
   img[KD_NB_CHAR* 2+ 1]= image_manager->getImage("borders2p.png");
   
-  b= image_manager->Load (acc, "vs.png");
+  b= image_manager->Load ("vs.png");
   assert (b);
   if (b== false) return false;
   img[KD_NB_CHAR* 2+ 2]= image_manager->getImage("vs.png");
-  
-  DELETE (acc);
 
   font[0]= Display::Slapstick;
   font[1]= Display::Slapstick->resize(0.5);

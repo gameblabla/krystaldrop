@@ -9,7 +9,6 @@
 #ifndef NO_SOUND
 #include "../sound/sound.h"
 #endif
-#include "../util/direct.h"
 #include "../video/Display.h"
 #include "../video/font.h"
 #include "../video/inputbox.h"
@@ -112,69 +111,59 @@ void KD_SurvivalController::loadSprites()
 { signed res;
   TACCRes *accFile;
   
-  accFile= new TACCRes();
-  res= accFile->LoadACC("art/survival.acc");
-  assert(!res);
   horizontalBar= new KD_Sprite();
-  res= horizontalBar->Load(accFile,"horizontalbar.txt");
+  res= horizontalBar->Load("horizontalbar.txt");
   assert(res);
   verticalBar  = new KD_Sprite();
-  res= verticalBar->Load(accFile,"verticalbar.txt");
+  res= verticalBar->Load("verticalbar.txt");
   assert(res);
   upleftBar    = new KD_Sprite();
-  res= upleftBar->Load(accFile,"upleftcorner.txt");
+  res= upleftBar->Load("upleftcorner.txt");
   assert(res);
   uprightBar   = new KD_Sprite();
-  res= uprightBar->Load(accFile,"uprightcorner.txt");
+  res= uprightBar->Load("uprightcorner.txt");
   assert(res);
 
   leftDoor = new KD_Sprite();
-  res= leftDoor->Load(accFile, "doorl.txt");
+  res= leftDoor->Load( "doorl.txt");
   assert(res);
   rightDoor = new KD_Sprite();
-  res= rightDoor->Load(accFile, "doorr.txt");
+  res= rightDoor->Load( "doorr.txt");
   assert(res);
 
   bottomBar   = new KD_Sprite();
-  res= bottomBar->Load(accFile, "bottombar.txt");
+  res= bottomBar->Load( "bottombar.txt");
   assert(res);
   
   image_manager= KD_ImageManager::getImageManager();
   assert (image_manager);
-  image_manager->Load(accFile, "terrain2.png");
+  image_manager->Load( "terrain2.png");
   
   background= image_manager->getImage("terrain2.png");
   background->disableAlpha();  
 
-  res= accFile->LoadACC("art/gems.acc");
   for (short gem_index= 0; gem_index< KD_GEM_NB_KINDS; gem_index++)
   { gem[gem_index]= new KD_Sprite();
-    res= gem[gem_index]->Load(accFile, GEM_ANIM_NAME[gem_index]);
+    res= gem[gem_index]->Load( GEM_ANIM_NAME[gem_index]);
     /* # test res ! */
   }
      
   /* character images */
-  res= accFile->LoadACC("art/charsel.acc");
   characterSprite= new KD_Sprite();
-  res= characterSprite->Load(accFile, CHAR_ANIM_NAME[pl_chars[0]]);
+  res= characterSprite->Load( CHAR_ANIM_NAME[pl_chars[0]]);
   assert(res);
                    
   clown = new KD_Sprite();
-  res= accFile->LoadACC("art/chibi.acc");
-  assert (!res);
-  res= clown->Load(accFile, "lightchip.txt");
-  clown->resize(1.8f);
+  res= clown->Load( "lightchip.txt");
+  /* For some reasons it was resized to abnormal proportions ??? - Gameblabla */
+  //clown->resize(1.8f);
 
   particle = new KD_Sprite();
-  res= accFile->LoadACC("art/misc/star.acc");
-  res= particle->Load(accFile,"star.txt");
+  res= particle->Load("star.txt");
 
-  res= accFile->LoadACC("art/misc/line.acc");
   lineSprite= new KD_Sprite();
   CHECK_ALLOC (lineSprite);
-  res= lineSprite->Load(accFile,"line.txt");
-
-  delete accFile;
+  res= lineSprite->Load("line.txt");
 }
 
 
@@ -259,7 +248,7 @@ signed Position_X= (640- DIFFICULTY* 32)/ 2;
     for (int gem_type= 0; gem_type< KD_GEM_NB_KINDS; gem_type++)
       table.setGemProbability (gem_type, 12);
     
-	table.loadGemsToCome("art/table.txt");
+	table.loadGemsToCome("table.txt");
 
 	table.setLoopGems(false);
 

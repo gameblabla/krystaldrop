@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <assert.h>
 
-#include "../util/direct.h"
 #include "background.h"
 #include "Display.h"
 #include "image.h"
@@ -37,29 +36,25 @@ KD_Background::~KD_Background()
 
 
 void KD_Background::InitBackground()
-{ for (signed index= 0; index< KD_BACKGROUND_SPR/ 4; index++)
-  { X_S[index   ]= (index* 4*640  / KD_BACKGROUND_SPR)+ 640  ;
-    X_S[index+ 5]= (index* 4*640  / KD_BACKGROUND_SPR)+ 640*2;
-    X_S[index+10]= (index* 4*640  / KD_BACKGROUND_SPR)+ 640*2;
-    X_S[index+15]= (index* 4*640  / KD_BACKGROUND_SPR)+ 640  ;     
-    Y_S[index   ]= (index* 4*2*480/ KD_BACKGROUND_SPR)       ;
-    Y_S[index+ 5]= (index* 4*2*480/ KD_BACKGROUND_SPR)       ;
-    Y_S[index+10]= (index* 4*2*480/ KD_BACKGROUND_SPR)+ 480  ;
-    Y_S[index+15]= (index* 4*2*480/ KD_BACKGROUND_SPR)+ 480  ;    
-  }
+{ 
+	for (signed index= 0; index< KD_BACKGROUND_SPR/ 4; index++)
+	{ 
+		X_S[index   ]= (index* 4*640  / KD_BACKGROUND_SPR)+ 640  ;
+		X_S[index+ 5]= (index* 4*640  / KD_BACKGROUND_SPR)+ 640*2;
+		X_S[index+10]= (index* 4*640  / KD_BACKGROUND_SPR)+ 640*2;
+		X_S[index+15]= (index* 4*640  / KD_BACKGROUND_SPR)+ 640  ;     
+		Y_S[index   ]= (index* 4*2*480/ KD_BACKGROUND_SPR)       ;
+		Y_S[index+ 5]= (index* 4*2*480/ KD_BACKGROUND_SPR)       ;
+		Y_S[index+10]= (index* 4*2*480/ KD_BACKGROUND_SPR)+ 480  ;
+		Y_S[index+15]= (index* 4*2*480/ KD_BACKGROUND_SPR)+ 480  ;    
+	}
   
-  KD_ImageManager* image_manager= KD_ImageManager::getImageManager();
-  assert (image_manager);
+	KD_ImageManager* image_manager= KD_ImageManager::getImageManager();
+	assert (image_manager);
   
-  TACCRes acc;
-  signed res;
-  res= acc.LoadACC("art/title.acc");
-  assert (res== 0);
-  if (res== 0)
-  { image_manager->Load (&acc, "title1.png");
-    back= image_manager->getImage ("title1.png");
+	image_manager->Load ("title1.png");
+	back= image_manager->getImage ("title1.png");
     assert (back);
-  }
 }
 
 

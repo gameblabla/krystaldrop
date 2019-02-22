@@ -324,7 +324,7 @@ public:
 	/**
 		Sets the sprites for the border of the field.
 	*/
-	void KD_Table::setAllBorders(KD_Sprite *spr[KD_NB_SPRITE_FOR_BORDER]);
+	void setAllBorders(KD_Sprite *spr[KD_NB_SPRITE_FOR_BORDER]);
 	void setHorizontalBar(KD_Sprite *spr);
 	void setVerticalBar(KD_Sprite *spr);
 	void setUpperLeftBar(KD_Sprite *spr);
@@ -365,7 +365,6 @@ public:
 		"b" is for a blue gem, "g" green, "r" red, "y" yellow
 	*/
 	signed loadGemsToCome(char *fileName);
-	signed loadGemsToCome(TACCRes *accFile, char *fileName);
 	//}
 
 	/**

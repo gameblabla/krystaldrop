@@ -5,7 +5,6 @@
 #include <string.h>
 
 #include "highscores.h"
-#include "../util/direct.h"
 
 
 KD_ScoreItem::KD_ScoreItem ()
@@ -250,61 +249,6 @@ signed KD_HighScoreTable::LoadTable (FILE* f)
   if (res< 1) return KD_E_CANTREADSCOREFILE;
   if (check_c!= check_r) return KD_E_INCORRECTSCOREFILE;
   
-  return 0;
-}
-
-
-signed KD_HighScoreTable::LoadTableFromACC (TACCRes* acc, unsigned Index)
-{ assert (acc);
-  unsigned long check_c= 1;
-  unsigned long check_r= 0;
-  short max_scores_r;
-  short max_name_length_r, nb_scores_r;
-  short index;
-  int score_r, info_r;
-  signed res;
-  char* buf;
-  int count;
-  
-  buf= acc->EntryPtr (Index);
-  if (buf== NULL) return KD_E_CANTREADACCFILE;
-
-  res= sscanf (buf, "%hx %hx %hx\n%n", &max_scores_r, &max_name_length_r, &nb_scores_r, &count);
-  buf+= count;
-  if (res< 3) return KD_E_CANTREADSCOREFILE;
-
-  if (max_scores_r!= max_scores || max_name_length_r!= max_name_length)
-    return KD_E_INCOMPATIBLESCOREFILE;
-  
-  if (nb_scores_r> max_scores_r)
-    return KD_E_INCORRECTSCOREFILE;
-  
-  nb_scores= nb_scores_r;
-  
-  char m= 0;
-  for (index= 0; index< nb_scores; index++)
-  { char c;
-    
-    for (signed car= 0; car< max_name_length; car++)
-    { c= *buf; 
-      buf++;
-      GetName(index)[car]= c;
-      m= m ^ c;
-      check_c+= m;
-    }
-    
-    res= sscanf (buf, " %x %x\n%n", &score_r, &info_r, &count);
-    buf+= count;
-    if (res< 1) return KD_E_CANTREADSCOREFILE;
-    table[index].SetScore (score_r);
-    table[index].SetInfo  (info_r);
-    check_c+= GetScore(index)* GetInfo(index);
-  }
-
-  res= sscanf (buf, "%lx", &check_r);
-  if (res< 1) return KD_E_CANTREADSCOREFILE;
-  if (check_c!= check_r) return KD_E_INCORRECTSCOREFILE;
-
   return 0;
 }
 

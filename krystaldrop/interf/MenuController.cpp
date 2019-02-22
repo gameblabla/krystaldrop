@@ -4,7 +4,6 @@
 #include "eventmanager.h"
 #include "MenuController.h"
 #include "../names.h"
-#include "../util/direct.h"
 #include "../video/animtextevent.h"
 #include "../video/background.h"
 #include "../video/Display.h"
@@ -53,27 +52,15 @@ bool KD_MenuController::init()
   
   Title->activateEvent();
   
-  TACCRes* acc= new TACCRes();
-  assert (acc);
-  if (acc== NULL) return false;
-  
-  res= acc->LoadACC ("art/menu.acc");
-  assert (res== 0);
-  if (res< 0) return false;
-  
-  b= ar_r[0].Load(acc,"ar_r.txt"); assert (b); if (b== false) return false;
+  b= ar_r[0].Load("ar_r.txt"); assert (b); if (b== false) return false;
   NEW (ar_ri, KD_SpriteInstance (ar_r));
   ar_ri->x= 120;
   ar_ri->y= 190;
   ar_ri->setAnim(0);
   
-  DELETE (acc);
-    
   Description= NULL;
   pos= 0;
-  UpdateDescription();
-  
-  DELETE (acc); 
+  UpdateDescription(); 
   
   return true;
 }

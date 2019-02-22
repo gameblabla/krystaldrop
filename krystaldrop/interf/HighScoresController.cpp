@@ -2,7 +2,6 @@
 
 #include "Application.h"
 #include "HighScoresController.h"
-#include "../util/direct.h"
 #include "../video/background.h"
 #include "../video/Display.h"
 #include "../video/font.h"
@@ -35,7 +34,7 @@ KD_HighScoresController::KD_HighScoresController(): KD_Controller()
   hst[0]= new KD_HighScoreTable(PLAYER_NAME_SIZE, MAX_PLAYERS_IN_HIGH_SCORE);
   /* try to read the high scores */
   /* if the file doesn't exist, create from the default one */
-  FILE* f= fopen (HST_NAME[1], "r");
+  FILE* f= fopen (HST_NAME[0], "r");
   if (f!= NULL)
   { signed res= hst[0]->LoadTable (f);
     fclose (f);
@@ -45,15 +44,7 @@ KD_HighScoresController::KD_HighScoresController(): KD_Controller()
   
   if (f== NULL)
   { /* read the default table from the acc file */ 
-    TACCRes acc;
-    signed res;
-    
-    res= acc.LoadACC (HST_NAME[0]);
-    assert (res== 0);
-    res= hst[0]->LoadTableFromACC (&acc, acc.EntryId (HST_NAME[1]));
-    assert (res== 0);
-    
-    FILE* f= fopen (HST_NAME[1], "w+");
+    FILE* f= fopen (HST_NAME[0], "w+");
     assert (f);
     hst[0]->SaveTable (f);
     fclose (f);
@@ -125,21 +116,12 @@ bool KD_HighScoresController::init()
 { signed res;
   bool b;
   
-  /* load the graphics */
-  TACCRes* acc= new TACCRes();
-  assert (acc);
-  if (acc== NULL) return false;
-    
-  res= acc->LoadACC ("art/charsel.acc");
-  assert (res== 0);
-  if (res< 0) return false;
-   
   KD_ImageManager* image_manager= KD_ImageManager::getImageManager();
   assert (image_manager);
   if (image_manager== NULL) return false;
     
   for (short ind= 0; ind< KD_HSC_NB_IMG; ind++)
-  { b= image_manager->Load (acc, CHAR_IMG_NAME[ind+ KD_NB_CHAR]);
+  { b= image_manager->Load( CHAR_IMG_NAME[ind+ KD_NB_CHAR]);
     assert (b);
     if (b== false) return false;
     img[ind]= image_manager->getImage(CHAR_IMG_NAME[ind+ KD_NB_CHAR]);
@@ -241,7 +223,7 @@ bool KD_HighScoresController::quit()
   
   /* save the high scores */
   FILE* f;
-  f= fopen (HST_NAME[1], "w+");
+  f= fopen (HST_NAME[0], "w+");
   assert (f);
   assert (hst[0]);
 #ifndef NDEBUG  

@@ -3,7 +3,6 @@
 #include "Application.h"
 #include "TitleController.h"
 #include "MenuController.h"
-#include "../util/direct.h"
 #include "../video/background.h"
 #include "../video/Display.h"
 #include "../video/font.h"
@@ -120,24 +119,13 @@ bool KD_TitleController::init()
 { signed res;
   bool b;
 
-  /* load the graphics */
-  TACCRes* accFile= new TACCRes();
-  assert (accFile);
-  if (accFile== NULL) return false;
-  
   /* initialize the sprites */
-  res= accFile->LoadACC("art/title.acc");
-  assert (res== 0);
-  if (res!= 0) return false;
-  b= spr[0].Load(accFile,"t_anim2.txt"); assert (b); if (b== false) return false;
-  b= spr[1].Load(accFile,"t_anim3.txt"); assert (b); if (b== false) return false; 
+  b= spr[0].Load("t_anim2.txt"); assert (b); if (b== false) return false;
+  b= spr[1].Load("t_anim3.txt"); assert (b); if (b== false) return false; 
 
-  res= accFile->LoadACC("art/misc/star.acc");
   particle= new KD_Sprite();
   CHECK_ALLOC (particle);
-  res= particle->Load(accFile,"star.txt");
-
-  DELETE (accFile);
+  res= particle->Load("star.txt");
 
   title[0]= new KD_SpriteInstance (&spr[0]); CHECK_ALLOC (title[0]);
   title[1]= new KD_SpriteInstance (&spr[1]); CHECK_ALLOC (title[1]);
