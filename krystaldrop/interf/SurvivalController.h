@@ -56,6 +56,18 @@ class KD_SurvivalController : public KD_Controller
 		The time between each dropping of line per level.
 	*/
 	int speedOfLevel[NB_LEVELS];
+	
+	#define KD_GOODMOOD 0
+	#define KD_MEDIUMMOOD 1
+	#define KD_STRESSED 2
+	/**
+		Current mood of the character:
+			0 = good mood
+			1 = medium mood (1/2 of screen full)
+			2 = stressed (3/4 of screen full)
+			CURRENTLY, ONLY 2 IS IMPLEMENTED
+	*/
+	int characterMood;
 
 	KD_Table table;
 

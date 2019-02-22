@@ -149,17 +149,17 @@ bool KD_DuelController::init()
 bool KD_DuelController::initRound()
 {
 	// Never use action 0 because it's the void action
-	bindKeyDown(SDLK_LEFT,   KD_A_LEFT2);
-	bindKeyDown(SDLK_RIGHT,  KD_A_RIGHT2);
-	bindKeyDown(SDLK_RETURN, KD_A_ADDLINE2);
-	bindKeyDown(SDLK_RSHIFT, KD_A_DROPGEM2);
-	bindKeyDown(SDLK_RCTRL,  KD_A_TAKEGEM2);
+	bindKeyDown(SDLK_LEFT,   KD_A_LEFT1);
+	bindKeyDown(SDLK_RIGHT,  KD_A_RIGHT1);
+	bindKeyDown(SDLK_RETURN, KD_A_ADDLINE1);
+	bindKeyDown(SDLK_LALT, KD_A_DROPGEM1);
+	bindKeyDown(SDLK_LCTRL,  KD_A_TAKEGEM1);
 	
-	bindKeyDown(SDLK_x,   KD_A_LEFT1);
-	bindKeyDown(SDLK_c,  KD_A_RIGHT1);
-	bindKeyDown(SDLK_v,  KD_A_ADDLINE1);
-	bindKeyDown(SDLK_LSHIFT,     KD_A_DROPGEM1);
-	bindKeyDown(SDLK_LCTRL,   KD_A_TAKEGEM1);
+	bindKeyDown(SDLK_x,   KD_A_LEFT2);
+	bindKeyDown(SDLK_c,  KD_A_RIGHT2);
+	bindKeyDown(SDLK_v,  KD_A_ADDLINE2);
+	bindKeyDown(SDLK_LSHIFT,     KD_A_DROPGEM2);
+	bindKeyDown(SDLK_LCTRL,   KD_A_TAKEGEM2);
 
 	for (int i=0; i<KD_DUEL_NB_PLAYERS; i++)
 	{
@@ -256,8 +256,8 @@ void KD_DuelController::loadSprites()
 	clown[0] = new KD_Sprite();
 	clown[1] = new KD_Sprite();
 	
-	res= clown[0]->Load( "lightchip.txt");
-	res= clown[1]->Load( "lightchip.txt");
+	res = clown[0]->Load( "lightchip.txt");
+	res = clown[1]->Load( "lightchip.txt");
 	
 	// ARF, si on charge 2 fois le meme, on l'agrandit 2 fois!!!
 	/* For some reasons it was resized to abnormal proportions ??? - Gameblabla */
@@ -517,6 +517,7 @@ bool KD_DuelController::displayPlayingState()
 			else
 			{
 				table[i].prepareLose();
+				/*table[i].TriggerCharacterAction(KD_LOOSING);*/
 			}
 		}
 	}
@@ -551,6 +552,21 @@ bool KD_DuelController::displayTable(short nbTable)
         { 
 			table[nbTable].addLine();
 			last_line_added_time[nbTable] = SDL_GetTicks();
+		}
+		
+		// If 3/4 of the screen is filled
+		if ( maxHeight*4 > table[nbTable].getHeight()*3  &&  characterMood[nbTable] != KD_STRESSED)
+		{
+			characterMood[nbTable] = KD_STRESSED;
+			//table[nbTable].TriggerCharacterAction(KD_DANGER);
+		}
+		else if ( maxHeight*2 > table[nbTable].getHeight() && maxHeight*4 < table[nbTable].getHeight()*3  &&  characterMood[nbTable] != KD_MEDIUMMOOD)
+		{
+			characterMood[nbTable] = KD_MEDIUMMOOD;
+		}
+		else if ( maxHeight*2 < table[nbTable].getHeight()  &&  characterMood[nbTable] != KD_GOODMOOD)
+		{
+			characterMood[nbTable] = KD_GOODMOOD;
 		}
 	
 		// Test if the player has lost.
@@ -596,6 +612,13 @@ bool KD_DuelController::displayTable(short nbTable)
 			comboEvent->setQuadraticMove(960,40,255,640,40,150,620,40,0,3);
 		}
 		comboEvent->activateEvent();
+
+		// First Combo: this is an ATTACK
+		/*if ( table[nbTable].getClashCount() == 2 )
+			table[nbTable].TriggerCharacterAction(KD_ATTACK);
+		// 4 Hit combo, this is a Strong Attack
+		else if ( table[nbTable].getClashCount() == 4 )
+			table[nbTable].TriggerCharacterAction(KD_STRONGATTACK);*/
 	}
 
 	if (table[nbTable].getClashCountFinished() > 1)
@@ -622,7 +645,10 @@ bool KD_DuelController::displayTable(short nbTable)
 		}
 		warningEvent->setBlinking(0.2f,0.2f);
 		warningEvent->activateEvent();
-
+		
+		// if more than 3 lines is send, the character is "attacked"
+		/*if ( table[nbTable].getClashCountFinished() >= 3 )
+			table[1-nbTable].TriggerCharacterAction(KD_ATTACKED);*/
 	}
 
 	//if (table.getClashCount() > maxClashCount && table.getClashCount()!=1) 

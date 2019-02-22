@@ -392,6 +392,22 @@ bool KD_SurvivalController::displayPlayingState()
 			last_line_added_time = SDL_GetTicks();
 		}
 
+		// If 3/4 of the screen is filled
+		if ( maxHeight*4 > table.getHeight()*3  &&  characterMood != KD_STRESSED)
+		{
+			characterMood = KD_STRESSED;
+			//characterSpriteInstance->setAnim(1);
+			//table[nbTable].TriggerCharacterAction(KD_DANGER);
+		}
+		else if ( maxHeight*2 > table.getHeight() && maxHeight*4 < table.getHeight()*3  &&  characterMood != KD_MEDIUMMOOD)
+		{
+			characterMood = KD_MEDIUMMOOD;
+		}
+		else if ( maxHeight*2 < table.getHeight()  &&  characterMood != KD_GOODMOOD)
+		{
+			characterMood = KD_GOODMOOD;
+		}
+
 		// Test if the player has lost.
 		if (maxHeight>table.getHeight())
 		{

@@ -1,4 +1,4 @@
-PRGNAME     = potator
+PRGNAME     = krystaldrop
 
 # define regarding OS, which compiler to use
 EXESUFFIX = 
@@ -16,7 +16,6 @@ SDL_INCLUDE =
 #-DNO_MUSIC    : Sound effects but no music
 #-DDISPLAY_FPS : Framerate counter
 #-DNO_OPENGL   : No OpenGL (seems to be buggy right now...)
-
 
 F_OPTS		= -I/usr/include/SDL -DNO_OPENGL
 CC_OPTS		= -O0 -g3 -fomit-frame-pointer -fdata-sections -ffunction-sections $(F_OPTS)

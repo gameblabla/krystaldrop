@@ -73,6 +73,8 @@ void KD_Music::PlayMusic()
 
 	current_music = this;
 	isPlaying=true;
+	
+	Mix_VolumeMusic(MIX_MAX_VOLUME);
 
 	if (loop)
 		Mix_PlayMusic(music, -1);
